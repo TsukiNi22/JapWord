@@ -93,7 +93,7 @@ def learning_window(app, category, action):
         message += f"{'Hiragana':<10} -> {ouput['hira']:<20} | {app.list[app.learning_i].hira}\n"
         message += f"{'Kanji':<10} -> {ouput['kanji']:<20} | {app.list[app.learning_i].kanji}"
         
-        PopUp(app, "🡳 Awnser 🡳", message, 550, 200)
+        PopUp(app, "🡳 Awnser 🡳", message, 750, 200)
         app.learning_i += 1
         learning_window(app, category, action)
 
