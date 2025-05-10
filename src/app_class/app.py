@@ -19,10 +19,12 @@ File Description:
 
 """ Import """
 try:
-    from src.const import DICO_PATH, HEIGHT, WIDTH
+    from src.const import DICO_PATH
     from src.app_class.data import Data
+    from src.windows import learning_window
     from screeninfo import get_monitors
     from pyautogui import position
+    from random import shuffle
     from json import load, dump
     from os import path
     import customtkinter as ctk
@@ -37,11 +39,11 @@ class JapWord():
     def __init__(self):
         self.dico = []
 
-    def setup_size(self, app):
+    def setup_size(self, app, width, height):
         monitor = get_mouse_monitor()
-        x = monitor.x + (monitor.width // 2) - (WIDTH // 2)
-        y = monitor.y + (monitor.height // 2) - (HEIGHT // 2)
-        app.geometry(f"{WIDTH}x{HEIGHT}+{x}+{y}")
+        x = monitor.x + (monitor.width // 2) - (width // 2)
+        y = monitor.y + (monitor.height // 2) - (height // 2)
+        app.geometry(f"{width}x{height}+{x}+{y}")
 
     def setup_grid(self, app, cols, rows):
         for i in range(cols * 2):
@@ -49,6 +51,21 @@ class JapWord():
         app.grid_rowconfigure(1, weight=1)
         for i in range(rows + 1 + 1):
             app.grid_rowconfigure(i, weight=1)
+
+    def on_choice(self, category, action):
+        match category:
+            case "Alphabet":
+                self.list = [data for data in self.dico if (getattr(data, "Letter", False) == True)]
+            case "Kanji":
+                self.list = [data for data in self.dico if (getattr(data, "Kanji", False) == True)]
+            case "Word":
+                self.list = [data for data in self.dico if (getattr(data, "Word", False) == True)]
+            case _:
+                print(f"Unknow category: {category}\n")
+                return
+        shuffle(self.list)
+        self.learning_i = 0
+        learning_window(self, category, action)
 
     def getdico(self):
         if (not path.exists(DICO_PATH)):

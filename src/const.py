@@ -26,5 +26,5 @@ DICO_PATH           = "data/dico.json"
 REQUIREMENTS_PATH   = "data/requirements.txt"
 
 """ Main Choice """
-CATEGORIES  = ["Alphabet", "Kanji", "Word"]
+CATEGORIES  = ["Word", "Kanji"]
 ACTION      = ["Random", "Fr → Jp", "Jp → Fr"]

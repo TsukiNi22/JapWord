@@ -19,8 +19,8 @@ File Description:
 
 """ Import """
 try:
-    from src.const import CATEGORIES, ACTION
-    from src.init.windows import choice_window
+    from src.const import CATEGORIES, ACTION, HEIGHT, WIDTH
+    from src.windows import choice_window
     import customtkinter as ctk
 except ImportError as e:
     print(f"Import Error: {e}")
@@ -35,8 +35,9 @@ def launch_app(app):
     # init the window
     app.JapWord = ctk.CTk()
     app.JapWord.title("JapWord App")
-    app.setup_size(app.JapWord)
+    app.setup_size(app.JapWord, WIDTH, HEIGHT)
     app.setup_grid(app.JapWord, len(CATEGORIES), len(ACTION))
+    app.JapWord.resizable(False, False)
 
     # call the main window
     choice_window(app)

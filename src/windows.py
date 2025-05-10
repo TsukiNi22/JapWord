@@ -20,6 +20,8 @@ File Description:
 """ Import """
 try:
     from src.const import CATEGORIES, ACTION
+    from src.app_class.dialog import Dialog
+    from random import choice
     import customtkinter as ctk
 except ImportError as e:
     print(f"Import Error: {e}")
@@ -46,7 +48,7 @@ def choice_window(app):
 
         # Button of the action
         for row, action in enumerate(ACTION, start=1):
-            button = ctk.CTkButton(app.JapWord, text=action, command=lambda c=category, a=action: on_choice(c, a))
+            button = ctk.CTkButton(app.JapWord, text=action, command=lambda c=category, a=action: app.on_choice(c, a))
             button.grid(row=row + 1, column=grid_col, padx=10, pady=5)
 
         # Vertical line
@@ -58,5 +60,28 @@ def choice_window(app):
     sep_h = ctk.CTkFrame(app.JapWord, height=line_thickness, fg_color=line_color)
     sep_h.grid(row=1, column=0, columnspan=2 * total_cols - 1, sticky="ew", pady=5)
 
-def on_choice(category, action):
-    pass
+def learning_window(app, category, action):
+    if (app.learning_i >= len(app.list)):
+        return
+
+    if (action == "Fr → Jp" or (action == "Random" and choice([True, False]))):
+        word = f"🡳 Translate '{app.list[app.learning_i].fr}' 🡳"
+    else:
+        word = "🡳 Translate 🡳\n"
+        word += f"Romanji -> '{app.list[app.learning_i].ro}'\n"
+        word += f"Katakana -> '{app.list[app.learning_i].kana}'\n"
+        word += f"Hiragana -> '{app.list[app.learning_i].hira}'\n"
+        word += f"Kanji -> '{app.list[app.learning_i].kanji}'"
+    
+    # init the learning window
+    app.Learning = Dialog(app, f"{category} with {action}", word)
+    ouput = app.Learning.show()
+
+    # check the user input
+    if ouput is None:
+        return
+    else:
+        print(f"Entrée: {ouput}")
+        app.learning_i += 1
+        learning_window(app, category, action)
+
