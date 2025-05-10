@@ -44,9 +44,10 @@ class JapWord():
         app.geometry(f"{WIDTH}x{HEIGHT}+{x}+{y}")
 
     def setup_grid(self, app, cols, rows):
-        for i in range(cols):
-            app.grid_columnconfigure(i, weight=1)
-        for i in range(rows + 1):
+        for i in range(cols * 2):
+            app.grid_columnconfigure(i, weight=1 * ((i + 1) % 2))
+        app.grid_rowconfigure(1, weight=1)
+        for i in range(rows + 1 + 1):
             app.grid_rowconfigure(i, weight=1)
 
     def getdico(self):
