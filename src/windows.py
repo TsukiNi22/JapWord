@@ -21,6 +21,7 @@ File Description:
 try:
     from src.const import CATEGORIES, ACTION
     from src.app_class.dialog import Dialog
+    from src.app_class.popup import PopUp
     from random import choice
     import customtkinter as ctk
 except ImportError as e:
@@ -62,7 +63,10 @@ def choice_window(app):
 
 def learning_window(app, category, action):
     if (app.learning_i >= len(app.list)):
-        return
+        if (len(app.list) == 0):
+            PopUp(app, "Information", "The list of data is empty!!!", 300, 150)
+            return
+        app.learning_i = 0
 
     if (action == "Fr → Jp" or (action == "Random" and choice([True, False]))):
         word = f"🡳 Translate '{app.list[app.learning_i].fr}' 🡳"
@@ -81,7 +85,15 @@ def learning_window(app, category, action):
     if ouput is None:
         return
     else:
-        print(f"Entrée: {ouput}")
+        message =  f"{'Type':<10} -> {'Your Answer':<20} | Real Answer\n"
+        message += "-" * 48 + "\n"
+        message += f"{'French':<10} -> {ouput['fr']:<20} | {app.list[app.learning_i].fr}\n"
+        message += f"{'Romanji':<10} -> {ouput['ro']:<20} | {app.list[app.learning_i].ro}\n"
+        message += f"{'Katakana':<10} -> {ouput['kana']:<20} | {app.list[app.learning_i].kana}\n"
+        message += f"{'Hiragana':<10} -> {ouput['hira']:<20} | {app.list[app.learning_i].hira}\n"
+        message += f"{'Kanji':<10} -> {ouput['kanji']:<20} | {app.list[app.learning_i].kanji}"
+        
+        PopUp(app, "🡳 Awnser 🡳", message, 550, 200)
         app.learning_i += 1
         learning_window(app, category, action)
 

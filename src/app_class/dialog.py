@@ -19,7 +19,6 @@ File Description:
 
 """ Import """
 try:
-    from src.const import HEIGHT, WIDTH
     import customtkinter as ctk
 except ImportError as e:
     print(f"Import Error: {e}")
@@ -82,12 +81,15 @@ class Dialog(ctk.CTkToplevel):
 
 
     def validate(self):
+        def clean(val, default):
+            return "None" if val == default or val.strip() == "" else val
+        
         self.ouput = {
-            "fr": self.var_fr.get() if hasattr(self, "var_fr") else None,
-            "ro": self.var_ro.get() if hasattr(self, "var_ro") else None,
-            "kana": self.var_kana.get() if hasattr(self, "var_kana") else None,
-            "hira": self.var_hira.get() if hasattr(self, "var_hira") else None,
-            "kanji": self.var_kanji.get() if hasattr(self, "var_kanji") else None,
+            "fr": clean(self.var_fr.get(), "French..."),
+            "ro": clean(self.var_ro.get(), "Romanji..."),
+            "kana": clean(self.var_kana.get(), "Katakana..."),
+            "hira": clean(self.var_hira.get(), "Hiragana..."),
+            "kanji": clean(self.var_kanji.get(), "Kanji..."),
         }
         self.destroy()
 
