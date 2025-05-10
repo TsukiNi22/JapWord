@@ -17,6 +17,14 @@ File Description:
 ## Const used in the app
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+""" Dimension """
+HEIGHT  = 250
+WIDTH   = 350
+
 """ Path """
-DICO_PATH = "data/dico.json"
-REQUIREMENTS_PATH = "data/requirements.txt"
+DICO_PATH           = "data/dico.json"
+REQUIREMENTS_PATH   = "data/requirements.txt"
+
+""" Main Choice """
+CATEGORIES  = ["Alphabet", "Kanji", "Word"]
+ACTION      = ["Random", "Fr → Jp", "Jp → Fr"]

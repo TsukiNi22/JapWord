@@ -11,35 +11,34 @@ Edition:
 ##  10/05/2025 by Tsukini
 
 File Name:
-##  app.py
+##  windows.py
 
 File Description:
-## Main loop of the app
+##  Init different windows
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """ Import """
 try:
     from src.const import CATEGORIES, ACTION
-    from src.init.windows import choice_window
     import customtkinter as ctk
 except ImportError as e:
     print(f"Import Error: {e}")
     exit(1)
 
+
 """ Program """
-def launch_app(app):
-    # setup theme
-    ctk.set_appearance_mode("dark")  # dark | light
-    ctk.set_default_color_theme("dark-blue")  # blue | green | dark-blue
+def choice_window(app):
+    
+    # init labels
+    for col, category in enumerate(CATEGORIES):
+        # Titre de colonne
+        label = ctk.CTkLabel(app.JapWord, text=category, font=("Arial", 18, "bold"))
+        label.grid(row=0, column=col, pady=(20, 10), sticky="n")
 
-    # init the window
-    app.JapWord = ctk.CTk()
-    app.JapWord.title("JapWord App")
-    app.setup_size(app.JapWord)
-    app.setup_grid(app.JapWord, len(CATEGORIES), len(ACTION))
+        # Boutons pour chaque action
+        for row, action in enumerate(ACTION, start=1):
+            button = ctk.CTkButton(app.JapWord, text=action, command=lambda c=category, a=action: on_choice(c, a))
+            button.grid(row=row, column=col, padx=10, pady=5)
 
-    # call the main window
-    choice_window(app)
-
-    # loop to keep open the window
-    app.JapWord.mainloop()
+def on_choice(category, action):
+    pass
