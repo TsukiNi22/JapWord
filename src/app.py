@@ -1,4 +1,3 @@
-#!/bin/env python3
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
  ██╗  ██╗ █████╗ ██████╗ ████████╗ █████╗ ███╗   ██╗██╗ █████╗ 
@@ -12,37 +11,34 @@ Edition:
 ##  10/05/2025 by Tsukini
 
 File Name:
-##  JapWord.py
+##  app.py
 
 File Description:
-## Main file of the mini application JapWord
+## Main loop of the app
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-""" Requirements """
-from src.requirements import requirements
-requirements()
 
 """ Import """
 try:
-    from src.app_class.app import JapWord
-    from src.app_class.data import DataType, Data
-    from src.app import launch_app
+    import customtkinter as ctk
 except ImportError as e:
     print(f"Import Error: {e}")
     exit(1)
 
-""" Program """
-if __name__ != "__main__":
-    print("JapWord is not a module!")
-    exit(1)
+def launch_app(app):
+    # setup theme
+    ctk.set_appearance_mode("dark")  # dark | light
+    ctk.set_default_color_theme("dark-blue")  # blue | green | dark-blue
 
-# app initialisation
-app = JapWord()
-app.getdico()
+    # init the window
+    app.JapWord = ctk.CTk()
+    app.JapWord.title("JapWord App")
+    app.JapWord.geometry("400x300")
 
-# start the app
-launch_app(app)
+    # testing
+    label = ctk.CTkLabel(app.JapWord, text="Hello, CustomTkinter!", font=("Arial", 20))
+    label.pack(pady=20)
+    bouton = ctk.CTkButton(app.JapWord, text="Fermer", command=app.JapWord.destroy)
+    bouton.pack(pady=10)
 
-#app.dico.append(Data(DataType.Word.value, "Debut", "kara", "から", "カラ"))
-# save of modif
-app.savedico()
+    # loop to keep open the window
+    app.JapWord.mainloop()
